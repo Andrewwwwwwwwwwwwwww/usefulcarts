@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public final class PlowScreen extends AbstractContainerScreen<PlowMenu> {
-    private static final ResourceLocation PLOW_GUI_TEXTURES = ResourceLocation.fromNamespaceAndPath(NiftyCarts.MOD_ID, "textures/gui/container/plow.png");
+    private static final ResourceLocation PLOW_GUI_TEXTURES = NiftyCarts.resLoc("textures/gui/container/plow.png");
 
     public PlowScreen(final PlowMenu screenContainer, final Inventory inv, final Component titleIn) {
         super(screenContainer, inv, titleIn);
