@@ -1,7 +1,7 @@
 package net.jmb19905.niftycarts.advancement;
 
 import net.jmb19905.niftycarts.NiftyCarts;
-import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;

@@ -93,7 +93,7 @@ public final class PlowEntity extends AbstractDrawnInventoryEntity {
                 InteractionResult result = stack.getItem().useOn(new ProxyItemUseContext(player, stack, new BlockHitResult(Vec3.ZERO, Direction.UP, blockPos, false)));
                 if (result.consumesAction()) NCCriteriaTriggers.USE_PLOW.trigger(player, stack);
                 if (damageable && stack.getCount() < count) {
-                    this.playSound(SoundEvents.ITEM_BREAK.value(), 0.8F, 0.8F + this.level().random.nextFloat() * 0.4F);
+                    this.playSound(SoundEvents.ITEM_BREAK.value(), 0.8F, 0.8F + this.random.nextFloat() * 0.4F);
                     this.updateSlot(i);
                 }
             }

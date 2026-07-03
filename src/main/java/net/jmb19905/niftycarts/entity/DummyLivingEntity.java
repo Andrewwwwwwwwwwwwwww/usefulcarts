@@ -92,11 +92,6 @@ public class DummyLivingEntity extends LivingEntity {
     }
 
     @Override
-    public boolean canAttackType(final @NotNull EntityType<?> type) {
-        return false;
-    }
-
-    @Override
     public boolean canAttack(final @NotNull LivingEntity living) {
         return false;
     }

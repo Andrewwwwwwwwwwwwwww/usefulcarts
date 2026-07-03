@@ -100,11 +100,11 @@ public class ReaperCartEntity extends AbstractDrawnEntity {
     }
 
     @Override
-    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand interactionHand) {
+    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand interactionHand, @NotNull Vec3 vec) {
         if (isLocked()) return InteractionResult.FAIL;
         if (!this.level().isClientSide()) {
             if (player.isSecondaryUseActive()) {
-                player.displayClientMessage(Component.translatable("message.niftycarts.use_reaper"), true);
+                player.sendOverlayMessage(Component.translatable("message.usefulcarts.use_reaper"));
             } else if (!player.isSecondaryUseActive() && this.pulling != null && this.pulling != player) {
                 if (player.startRiding(this)) {
                     return InteractionResult.CONSUME;

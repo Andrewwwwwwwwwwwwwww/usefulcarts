@@ -1,0 +1,20 @@
+{
+  "entity.cart.attach": {
+    "sounds": [
+      "usefulcarts:entity/cart/attach"
+    ],
+    "subtitle": "subtitles.usefulcarts.cart.attached"
+  },
+  "entity.cart.detach": {
+    "sounds": [
+      "usefulcarts:entity/cart/detach"
+    ],
+    "subtitle": "subtitles.usefulcarts.cart.detached"
+  },
+  "entity.cart.place": {
+    "sounds": [
+      "usefulcarts:entity/cart/place"
+    ],
+    "subtitle": "subtitles.usefulcarts.cart.placed"
+  }
+}

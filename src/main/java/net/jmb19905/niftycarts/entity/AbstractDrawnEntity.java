@@ -97,15 +97,9 @@ public abstract class AbstractDrawnEntity extends Entity {
     }
 
     @Override
-    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand) {
+    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand, @NotNull Vec3 vec) {
         if (isLocked()) return InteractionResult.FAIL;
-        return super.interact(player, hand);
-    }
-
-    @Override
-    public @NotNull InteractionResult interactAt(@NotNull Player player, @NotNull Vec3 vec, @NotNull InteractionHand hand) {
-        if (isLocked()) return InteractionResult.FAIL;
-        return super.interactAt(player, vec, hand);
+        return super.interact(player, hand, vec);
     }
 
     @Override

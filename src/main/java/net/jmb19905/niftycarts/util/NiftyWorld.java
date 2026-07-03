@@ -31,7 +31,7 @@ public class NiftyWorld extends SavedData {
                                     new EntityWithId(entry.getIntKey(), entry.getValue()))
                             .toList())).apply(instance, NiftyWorld::new));
     public static final SavedDataType<@NotNull NiftyWorld> TYPE = new SavedDataType<>(
-            NiftyCarts.MOD_ID + "_world",
+            NiftyCarts.resLoc("world"),
             NiftyWorld::new,
             CODEC,
             DataFixTypes.LEVEL

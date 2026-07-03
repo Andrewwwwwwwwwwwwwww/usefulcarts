@@ -65,7 +65,7 @@ public final class AnimalCartEntity extends AbstractDrawnEntity {
     }
 
     @Override
-    public @NotNull InteractionResult interact(final @NotNull Player player, final @NotNull InteractionHand hand) {
+    public @NotNull InteractionResult interact(final @NotNull Player player, final @NotNull InteractionHand hand, final @NotNull Vec3 vec) {
         if (isLocked()) return InteractionResult.FAIL;
         if (player.isSecondaryUseActive()) {
             if (!this.level().isClientSide()) {

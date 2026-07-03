@@ -14,9 +14,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.object.armorstand.ArmorStandArmorModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.block.BlockModelRenderState;
+import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.layers.EquipmentLayerRenderer;
@@ -35,6 +35,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.AtlasIds;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.PaintingVariantTags;
 import net.minecraft.tags.TagKey;
@@ -150,25 +151,22 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
             final SubmitNodeCollector collector,
             final NonNullList<@NotNull ItemStack> cargo) {
         state.flowerBasket = true;
-        final BlockRenderDispatcher dispatcher = Minecraft.getInstance().getBlockRenderer();
+        final BlockModelResolver resolver = this.ctx.getBlockModelResolver();
+        final BlockModelRenderState blockRenderState = new BlockModelRenderState();
+        final BlockDisplayContext displayContext = BlockDisplayContext.create();
         for (int i = 0; i < cargo.size(); i++) {
             final ItemStack itemStack = cargo.get(i);
             if (!(itemStack.getItem() instanceof BlockItem)) continue;
             final int ix = i % 2, iz = i / 2;
             final BlockState defaultState = ((BlockItem) itemStack.getItem()).getBlock().defaultBlockState();
             final BlockState blockState = defaultState.hasProperty(BlockStateProperties.DOUBLE_BLOCK_HALF) ? defaultState.setValue(BlockStateProperties.DOUBLE_BLOCK_HALF, DoubleBlockHalf.UPPER) : defaultState;
-            final BlockStateModel model = dispatcher.getBlockModel(blockState);
-            final int rgb = Minecraft.getInstance().getBlockColors().getColor(blockState, null, null, 0);
-            final float r = (float) (rgb >> 16 & 255) / 255.0F;
-            final float g = (float) (rgb >> 8 & 255) / 255.0F;
-            final float b = (float) (rgb & 255) / 255.0F;
+            resolver.update(blockRenderState, blockState, displayContext);
             stack.pushPose();
             stack.translate(0.0D, -0.7D, getFlowerOffsetZ());
             stack.scale(0.65F, 0.65F, 0.65F);
             stack.translate(ix, 0.5D, iz - 1.0D);
             stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
-            collector.submitCustomGeometry(stack, RenderTypes.cutoutMovingBlock(),
-                    (pose, vertexConsumer) -> ModelBlockRenderer.renderModel(pose, vertexConsumer, model, r, g, b, state.lightCoords, OverlayTexture.NO_OVERLAY));
+            blockRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, -1);
             stack.popPose();
         }
     }
@@ -345,7 +343,7 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
     protected abstract double getShieldOffsetY();
 
     private enum Contents {
-        FLOWERS(s -> s.getItem() instanceof BlockItem && s.is(ItemTags.SMALL_FLOWERS) && NiftyCartsConfig.getClient().renderSupplyFlowers.get()),
+        FLOWERS(s -> s.getItem() instanceof BlockItem blockItem && blockItem.getBlock().defaultBlockState().is(BlockTags.SMALL_FLOWERS) && NiftyCartsConfig.getClient().renderSupplyFlowers.get()),
         PAINTINGS(s -> s.getItem() == Items.PAINTING && NiftyCartsConfig.getClient().renderSupplyPaintings.get()),
         WHEEL(s -> s.getItem() == NiftyCarts.WHEEL && NiftyCartsConfig.getClient().renderSupplyWheel.get() && NiftyCartsConfig.getClient().renderSupplies.get()),
         SUPPLIES(s -> NiftyCartsConfig.getClient().renderSupplies.get()),

@@ -4,8 +4,8 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.AtlasManager;
-import net.minecraft.client.resources.model.Material;
+import net.minecraft.client.resources.model.sprite.AtlasManager;
+import net.minecraft.client.resources.model.sprite.SpriteId;
 import net.minecraft.resources.Identifier;
 
 @SuppressWarnings("unused")
@@ -18,17 +18,17 @@ public class CartMaterial {
 
     public static final int[][] R270 = {{0, 1}, {-1, 0}};
 
-    private final Material sprite;
+    private final SpriteId sprite;
 
     private final int size;
 
     private final ObjectList<Fill> fills = new ObjectArrayList<>();
 
     public CartMaterial(Identifier sprite, final int size) {
-        this(new Material(TextureAtlas.LOCATION_BLOCKS, sprite), size);
+        this(new SpriteId(TextureAtlas.LOCATION_BLOCKS, sprite), size);
     }
 
-    public CartMaterial(final Material sprite, final int size) {
+    public CartMaterial(final SpriteId sprite, final int size) {
         this.sprite = sprite;
         this.size = size;
     }

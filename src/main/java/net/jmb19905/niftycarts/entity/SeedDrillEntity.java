@@ -5,7 +5,7 @@ import net.jmb19905.niftycarts.NiftyCarts;
 import net.jmb19905.niftycarts.NiftyCartsConfig;
 import net.jmb19905.niftycarts.advancement.NCCriteriaTriggers;
 import net.jmb19905.niftycarts.container.SeedDrillMenu;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -59,7 +59,7 @@ public class SeedDrillEntity extends AbstractDrawnInventoryEntity {
     @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
     private void plant(Optional<ServerPlayer> playerOptional) {
         for (int i = 0; i < 3; i++) {
-            int j = this.level().random.nextInt(SLOT_COUNT);
+            int j = this.random.nextInt(SLOT_COUNT);
             final ItemStack stack = this.getStackInSlot(j);
             final float f = i - 1;
             final double x = this.getX() + Mth.sin((float) Math.toRadians(this.getYRot() + 90)) * f;

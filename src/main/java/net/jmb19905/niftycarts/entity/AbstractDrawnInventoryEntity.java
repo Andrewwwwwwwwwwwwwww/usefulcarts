@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -72,7 +73,7 @@ public abstract class AbstractDrawnInventoryEntity extends AbstractDrawnEntity i
     }
 
     @Override
-    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand interactionHand) {
+    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand interactionHand, @NotNull Vec3 vec) {
         if (isLocked()) return InteractionResult.FAIL;
         if (canInteractNotOpen() && this.canAddPassenger(player) && !player.isSecondaryUseActive()) {
             return onInteractNotOpen(player, interactionHand);

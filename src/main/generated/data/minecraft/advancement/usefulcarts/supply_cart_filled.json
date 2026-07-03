@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:usefulcarts/root",
+  "criteria": {
+    "supply_cart_filled": {
+      "conditions": {
+        "type": "usefulcarts:supply_cart",
+        "fill": 1.0
+      },
+      "trigger": "usefulcarts:pull_cart"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.usefulcarts.supply_cart_filled.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "usefulcarts:oak_supply_cart"
+    },
+    "title": {
+      "translate": "advancements.usefulcarts.supply_cart_filled.title"
+    }
+  },
+  "requirements": [
+    [
+      "supply_cart_filled"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

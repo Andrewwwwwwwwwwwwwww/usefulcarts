@@ -1,0 +1,17 @@
+{
+  "item.usefulcarts.supply_cart": "Carro da trasporto",
+  "item.usefulcarts.plow": "Aratro",
+  "item.usefulcarts.animal_cart": "Carro per animali",
+  "item.usefulcarts.wheel": "Ruota",
+  "entity.usefulcarts.supply_cart": "Carro da trasporto",
+  "entity.usefulcarts.plow": "Aratro",
+  "entity.usefulcarts.animal_cart": "Carro per animali",
+  "entity.usefulcarts.postilion": "Postiglione",
+  "key.categories.usefulcarts": "UsefulCarts",
+  "key.category.usefulcarts.usefulcarts": "UsefulCarts",
+  "key.usefulcarts.action": "Azione",
+  "subtitles.usefulcarts.cart.attached": "Carro attaccato",
+  "subtitles.usefulcarts.cart.detached": "Carro distaccato",
+  "subtitles.usefulcarts.cart.placed": "Carro piazzato",
+  "stat.usefulcarts.cart_one_cm": "Distanza via carro"
+}

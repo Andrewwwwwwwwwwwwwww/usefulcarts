@@ -2,8 +2,10 @@ package net.jmb19905.niftycarts.advancement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.predicates.*;
+import net.minecraft.advancements.predicates.entity.*;
+import net.minecraft.advancements.triggers.*;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;

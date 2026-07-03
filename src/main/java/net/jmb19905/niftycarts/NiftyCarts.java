@@ -7,7 +7,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -27,6 +27,7 @@ import net.jmb19905.niftycarts.util.NiftyGoalAdder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
@@ -40,8 +41,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -49,13 +50,12 @@ import net.neoforged.fml.config.ModConfig;
 import org.jetbrains.annotations.NotNull;
 import oshi.util.tuples.Triplet;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 public class NiftyCarts implements ModInitializer {
-	public static final String MOD_ID = "niftycarts";
+	public static final String MOD_ID = "usefulcarts";
 
 	public static final Item WHEEL = register("wheel", Item::new);
 	private static final Function<Triplet<WoodType, String, FeatureFlag[]>, CartItem> CART_ITEM_SUPPLIER =
@@ -203,28 +203,35 @@ public class NiftyCarts implements ModInitializer {
         Registry.register(BuiltInRegistries.MENU, resLoc("chest_eight_rows"), WAGON_9x8_MENU_TYPE);
         Registry.register(BuiltInRegistries.MENU, resLoc("chest_quad"), WAGON_12x9_MENU_TYPE);
 
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.INGREDIENTS).register(content -> content.accept(WHEEL));
-		ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(content -> Arrays.stream(VANILLA_WOOD_TYPES).forEach(woodType -> {
-            content.accept(SUPPLY_CART.get(woodType));
-            content.accept(PLOW.get(woodType));
-            content.accept(SEED_DRILL.get(woodType));
-            content.accept(REAPER.get(woodType));
-            content.accept(ANIMAL_CART.get(woodType));
-            content.accept(HAND_CART.get(woodType));
-            content.accept(WAGON.get(woodType));
-        }));
+		Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, resLoc("usefulcarts"),
+				FabricCreativeModeTab.builder()
+						.title(Component.translatable("itemGroup.usefulcarts"))
+						.icon(() -> new ItemStack(SUPPLY_CART.get(WoodType.OAK)))
+						.displayItems((params, output) -> {
+							output.accept(WHEEL);
+							for (WoodType woodType : VANILLA_WOOD_TYPES) {
+								output.accept(SUPPLY_CART.get(woodType));
+								output.accept(PLOW.get(woodType));
+								output.accept(SEED_DRILL.get(woodType));
+								output.accept(REAPER.get(woodType));
+								output.accept(ANIMAL_CART.get(woodType));
+								output.accept(HAND_CART.get(woodType));
+								output.accept(WAGON.get(woodType));
+							}
+						})
+						.build());
 
 		Registry.register(BuiltInRegistries.SOUND_EVENT, ATTACH_SOUND_ID, ATTACH_SOUND);
 		Registry.register(BuiltInRegistries.SOUND_EVENT, DETACH_SOUND_ID, DETACH_SOUND);
 		Registry.register(BuiltInRegistries.SOUND_EVENT, PLACE_SOUND_ID, PLACE_SOUND);
 
-		PayloadTypeRegistry.playC2S().register(ActionKeyPayload.TYPE, ActionKeyPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(OpenSupplyCartPayload.TYPE, OpenSupplyCartPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(ToggleSlowPayload.TYPE, ToggleSlowPayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(RequestCartUpdatePayload.TYPE, RequestCartUpdatePayload.CODEC);
-		PayloadTypeRegistry.playC2S().register(CoachmanMovePayload.TYPE, CoachmanMovePayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(ActionKeyPayload.TYPE, ActionKeyPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(OpenSupplyCartPayload.TYPE, OpenSupplyCartPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(ToggleSlowPayload.TYPE, ToggleSlowPayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(RequestCartUpdatePayload.TYPE, RequestCartUpdatePayload.CODEC);
+		PayloadTypeRegistry.serverboundPlay().register(CoachmanMovePayload.TYPE, CoachmanMovePayload.CODEC);
 
-		PayloadTypeRegistry.playS2C().register(UpdateDrawnPayload.TYPE, UpdateDrawnPayload.CODEC);
+		PayloadTypeRegistry.clientboundPlay().register(UpdateDrawnPayload.TYPE, UpdateDrawnPayload.CODEC);
 
 		ServerPlayNetworking.registerGlobalReceiver(ActionKeyPayload.TYPE, (payload, context) -> ActionKeyPayload.handle(context.player()));
 		ServerPlayNetworking.registerGlobalReceiver(OpenSupplyCartPayload.TYPE, (payload, context) -> OpenSupplyCartPayload.handle(context.player()));

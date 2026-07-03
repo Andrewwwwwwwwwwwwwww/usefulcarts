@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": "minecraft:stripped_pale_oak_log",
+    "p": "minecraft:pale_oak_planks",
+    "w": "usefulcarts:wheel"
+  },
+  "pattern": [
+    "lll",
+    "wpw",
+    "wpw"
+  ],
+  "result": {
+    "count": 1,
+    "id": "usefulcarts:pale_oak_wagon"
+  }
+}

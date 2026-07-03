@@ -117,7 +117,7 @@ public class WagonEntity extends AbstractDrawnInventoryEntity {
     }
 
     @Override
-    public @NotNull InteractionResult interactAt(@NotNull Player player, @NotNull Vec3 vec3, @NotNull InteractionHand interactionHand) {
+    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand interactionHand, @NotNull Vec3 vec3) {
         if (isLocked()) return InteractionResult.FAIL;
         ItemStack itemStack = player.getItemInHand(interactionHand);
         final InteractionResult bannerResult = this.useBanner(player, interactionHand);
@@ -134,7 +134,7 @@ public class WagonEntity extends AbstractDrawnInventoryEntity {
             }
             return InteractionResult.SUCCESS_SERVER;
         }
-        return super.interact(player, interactionHand);
+        return super.interact(player, interactionHand, vec3);
     }
 
     private InteractionResult interactCarpet(ItemStack itemStack, Player player) {

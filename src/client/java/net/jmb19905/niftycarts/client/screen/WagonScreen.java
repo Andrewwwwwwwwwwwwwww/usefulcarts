@@ -2,7 +2,7 @@ package net.jmb19905.niftycarts.client.screen;
 
 import net.jmb19905.niftycarts.NiftyCarts;
 import net.jmb19905.niftycarts.container.WagonMenu;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
@@ -15,25 +15,26 @@ public class WagonScreen extends AbstractContainerScreen<@NotNull WagonMenu> {
     private final int containerRows;
 
     public WagonScreen(WagonMenu chestMenu, Inventory inventory, Component component) {
-        super(chestMenu, inventory, component);
+        super(chestMenu, inventory, component, imageWidth(chestMenu), imageHeight(chestMenu));
         this.containerRows = chestMenu.getRowCount();
-        this.imageHeight = 114 + this.containerRows * 18;
-        this.inventoryLabelY = this.imageHeight - 94;
+        // Use the un-clamped height (114 + rows*18) for the label offset, matching the original layout.
+        this.inventoryLabelY = (114 + this.containerRows * 18) - 94;
         if (this.containerRows >= 12) {
-            this.imageWidth = this.imageWidth + 54;
-            this.imageHeight = 114 + 9 * 18;
             this.inventoryLabelY = this.inventoryLabelY - 54;
             this.inventoryLabelX += 27;
         }
     }
 
-    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        super.render(guiGraphics, mouseX, mouseY, partialTick);
-        this.renderTooltip(guiGraphics, mouseX, mouseY);
+    private static int imageWidth(WagonMenu menu) {
+        return menu.getRowCount() >= 12 ? 176 + 54 : 176;
+    }
+
+    private static int imageHeight(WagonMenu menu) {
+        return menu.getRowCount() >= 12 ? 114 + 9 * 18 : 114 + menu.getRowCount() * 18;
     }
 
     @Override
-    protected void renderBg(@NotNull GuiGraphics guiGraphics, float f, int i, int j) {
+    public void extractBackground(@NotNull GuiGraphicsExtractor guiGraphics, int i, int j, float f) {
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
         if (this.containerRows < 12) {

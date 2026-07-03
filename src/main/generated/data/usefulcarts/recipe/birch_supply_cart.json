@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "c": "minecraft:chest",
+    "p": "minecraft:birch_planks",
+    "w": "usefulcarts:wheel"
+  },
+  "pattern": [
+    "pcp",
+    "pcp",
+    "wpw"
+  ],
+  "result": {
+    "count": 1,
+    "id": "usefulcarts:birch_supply_cart"
+  }
+}

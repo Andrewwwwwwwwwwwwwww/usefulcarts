@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:usefulcarts/root",
+  "criteria": {
+    "attach_banner": {
+      "conditions": {
+        "item": {
+          "items": "#minecraft:banners"
+        }
+      },
+      "trigger": "usefulcarts:cart_add_banner"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.usefulcarts.attach_banner.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:red_banner"
+    },
+    "title": {
+      "translate": "advancements.usefulcarts.attach_banner.title"
+    }
+  },
+  "requirements": [
+    [
+      "attach_banner"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

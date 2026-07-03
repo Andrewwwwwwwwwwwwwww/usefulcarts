@@ -1,0 +1,17 @@
+{
+  "item.usefulcarts.supply_cart": "Тележка для припасов",
+  "item.usefulcarts.plow": "Плуг",
+  "item.usefulcarts.animal_cart": "Тележка для животных",
+  "item.usefulcarts.wheel": "Колесо",
+  "entity.usefulcarts.supply_cart": "Тележка для припасов",
+  "entity.usefulcarts.plow": "Плуг",
+  "entity.usefulcarts.animal_cart": "Тележка для животных",
+  "entity.usefulcarts.postilion": "Форейтор",
+  "key.categories.usefulcarts": "UsefulCarts",
+  "key.category.usefulcarts.usefulcarts": "UsefulCarts",
+  "key.usefulcarts.action": "Ключ действия",
+  "subtitles.usefulcarts.cart.attached": "Тележка крепится",
+  "subtitles.usefulcarts.cart.detached": "Тележка крепится",
+  "subtitles.usefulcarts.cart.placed": "Тележка установлена",
+  "stat.usefulcarts.cart_one_cm": "Расстояние на тележке"
+}

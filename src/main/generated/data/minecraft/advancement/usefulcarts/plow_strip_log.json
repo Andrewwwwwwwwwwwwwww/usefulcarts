@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:usefulcarts/root",
+  "criteria": {
+    "plow_strip_log": {
+      "conditions": {
+        "item": {
+          "items": "#minecraft:axes"
+        }
+      },
+      "trigger": "usefulcarts:use_plow"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.usefulcarts.plow_strip_log.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:stripped_oak_log"
+    },
+    "title": {
+      "translate": "advancements.usefulcarts.plow_strip_log.title"
+    }
+  },
+  "requirements": [
+    [
+      "plow_strip_log"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

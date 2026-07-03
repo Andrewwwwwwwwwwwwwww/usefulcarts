@@ -1,0 +1,26 @@
+{
+  "criteria": {
+    "place_cart": {
+      "trigger": "usefulcarts:place_cart_item"
+    }
+  },
+  "display": {
+    "background": "minecraft:gui/advancements/backgrounds/husbandry",
+    "description": {
+      "translate": "advancements.usefulcarts.place_cart.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "usefulcarts:wheel"
+    },
+    "title": {
+      "translate": "advancements.usefulcarts.place_cart.title"
+    }
+  },
+  "requirements": [
+    [
+      "place_cart"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

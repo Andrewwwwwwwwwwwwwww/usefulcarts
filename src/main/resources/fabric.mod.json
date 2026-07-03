@@ -1,9 +1,9 @@
 {
 	"schemaVersion": 1,
-	"id": "niftycarts",
+	"id": "usefulcarts",
 	"version": "${version}",
-	"name": "NiftyCarts",
-	"description": "A Fabric Port of the AstikorCarts Minecraft mod. It adds carts for travel, shipping and farming.",
+	"name": "UsefulCarts",
+	"description": "UsefulCarts adds horse-drawn and hand-pulled carts for travel, shipping and farming.",
 	"authors": [
 		"MennoMax",
 		"paul101",
@@ -13,7 +13,7 @@
 		"sources": "https://github.com/jmb05/nifty-carts"
 	},
 	"license": "MIT",
-	"icon": "assets/niftycarts/icon.png",
+	"icon": "assets/usefulcarts/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
@@ -21,26 +21,24 @@
 		],
 		"client": [
           "net.jmb19905.niftycarts.client.NiftyCartsClient"
-		], "fabric-datagen": [
-		  "net.jmb19905.niftycarts.client.datagen.NiftyCartsDatagen"
 		]
 	},
 	"mixins": [
-		"niftycarts.mixins.json",
+		"usefulcarts.mixins.json",
 		{
-			"config": "niftycarts.client.mixins.json",
+			"config": "usefulcarts.client.mixins.json",
 			"environment": "client"
 		}
 	],
 	"depends": {
-		"fabricloader": ">=0.18.4",
-		"minecraft": ["1.21.11"],
-		"java": ">=21",
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~26.2",
+		"java": ">=25",
 		"fabric-api": "*",
-		"forgeconfigapiport": ">=21.11.1"
+		"forgeconfigapiport": ">=26.2.1"
 	},
 	"suggests": {
 		"forgeconfigscreens": "*"
 	},
-	"accessWidener": "niftycarts.accesswidener"
+	"accessWidener": "usefulcarts.accesswidener"
 }

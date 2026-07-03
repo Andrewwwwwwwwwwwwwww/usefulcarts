@@ -3,8 +3,10 @@ package net.jmb19905.niftycarts.advancement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.jmb19905.niftycarts.entity.AbstractDrawnEntity;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.predicates.*;
+import net.minecraft.advancements.predicates.entity.*;
+import net.minecraft.advancements.triggers.*;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +51,7 @@ public class PullCartCriterion extends SimpleCriterionTrigger<PullCartCriterion.
         }
 
         public boolean matches(AbstractDrawnEntity entity, float distance, float fillLevel) {
-            return (this.type.isEmpty() || this.type.get().matches(entity.getType()))
+            return (this.type.isEmpty() || this.type.get().matches(entity.getType().builtInRegistryHolder()))
                     && (this.minDist.isEmpty() || distance >= this.minDist.get())
                     && (this.minPassengerCount.isEmpty() || entity.getPassengers().size() >= this.minPassengerCount.get())
                     && (this.fillLevel.isEmpty() || fillLevel >= this.fillLevel.get());

@@ -12,11 +12,11 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BannerRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.MaterialSet;
-import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.sprite.SpriteGetter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
@@ -33,12 +33,12 @@ public abstract class DrawnRenderer<T extends AbstractDrawnEntity, S extends Car
 
     private final BannerFlagModel flagModel;
 
-    private final MaterialSet materials;
+    private final SpriteGetter materials;
 
     protected DrawnRenderer(final EntityRendererProvider.Context renderManager, final M model) {
         super(renderManager);
         this.model = model;
-        this.materials = renderManager.getMaterials();
+        this.materials = renderManager.getSprites();
 
         this.flagModel = model.getFlagModel();
         BannerModel bannerModel = model.getBannerModel();
@@ -108,12 +108,12 @@ public abstract class DrawnRenderer<T extends AbstractDrawnEntity, S extends Car
         stack.mulPose(Axis.YP.rotationDegrees(90.0F));
         final float scale = 2.0F / 3.0F;
         stack.scale(scale, scale, scale);
-        var material = ModelBakery.BANNER_BASE;
+        var material = Sheets.BANNER_BASE;
         submitNodeCollector.submitModelPart(pole, stack, material.renderType(RenderTypes::entitySolid), state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(material));
         submitNodeCollector.submitModelPart(bar, stack, material.renderType(RenderTypes::entitySolid), state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(material));
         float k = ((float)Math.floorMod((int) ((state.x * 7 + state.y * 9 + state.z * 13) + state.ageInTicks), 100) + state.delta) / 100.0F;
         stack.translate(-4 / 16f, 18 / 16f, 1.5f / 16f);
-        BannerRenderer.submitPatterns(materials, stack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, this.flagModel, k, ModelBakery.BANNER_BASE, true, state.bannerColor, state.bannerPattern, false, null, 0);
+        BannerRenderer.submitPatterns(materials, stack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, this.flagModel, k, true, state.bannerColor, state.bannerPattern, null);
         stack.popPose();
     }
 

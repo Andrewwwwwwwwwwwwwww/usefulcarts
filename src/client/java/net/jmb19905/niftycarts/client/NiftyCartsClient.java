@@ -6,9 +6,9 @@ import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.jmb19905.niftycarts.NiftyCarts;
 import net.jmb19905.niftycarts.NiftyCartsConfig;
 import net.jmb19905.niftycarts.client.renderer.NiftyCartsModelLayers;
@@ -60,15 +60,15 @@ public class NiftyCartsClient implements ClientModInitializer {
         EntityRenderers.register(NiftyCarts.WAGON_ENTITY, WagonRenderer::new);
         EntityRenderers.register(NiftyCarts.POSTILION_ENTITY, PostilionRenderer::new);
 
-		EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.SUPPLY_CART, SupplyCartModel::createLayer);
-		EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.ANIMAL_CART, AnimalCartModel::createLayer);
-		EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.PLOW, PlowModel::createLayer);
-		EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.HAND_CART, HandCartModel::createLayer);
-		EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.SEED_DRILL, SeedDrillModel::createLayer);
-		EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.REAPER, ReaperModel::createLayer);
-        EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.WAGON, WagonModel::createLayer);
-        EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.WAGON_ROOF, WagonRoofModel::createRoofLayer);
-        EntityModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.WAGON_CHEST, WagonModel::createChestLayer);
+		ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.SUPPLY_CART, SupplyCartModel::createLayer);
+		ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.ANIMAL_CART, AnimalCartModel::createLayer);
+		ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.PLOW, PlowModel::createLayer);
+		ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.HAND_CART, HandCartModel::createLayer);
+		ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.SEED_DRILL, SeedDrillModel::createLayer);
+		ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.REAPER, ReaperModel::createLayer);
+        ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.WAGON, WagonModel::createLayer);
+        ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.WAGON_ROOF, WagonRoofModel::createRoofLayer);
+        ModelLayerRegistry.registerModelLayer(NiftyCartsModelLayers.WAGON_CHEST, WagonModel::createChestLayer);
 
 		MenuScreens.register(NiftyCarts.PLOW_MENU_TYPE, PlowScreen::new);
 		MenuScreens.register(NiftyCarts.SEED_DRILL_MENU_TYPE, SeedDrillScreen::new);
@@ -76,17 +76,17 @@ public class NiftyCartsClient implements ClientModInitializer {
         MenuScreens.register(NiftyCarts.WAGON_9x8_MENU_TYPE, WagonScreen::new);
         MenuScreens.register(NiftyCarts.WAGON_12x9_MENU_TYPE, WagonScreen::new);
 
-        KeyMapping.Category keyCategory = KeyMapping.Category.register(NiftyCarts.resLoc("niftycarts"));
+        KeyMapping.Category keyCategory = KeyMapping.Category.register(NiftyCarts.resLoc("usefulcarts"));
 
-		actionKeyMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping(
-				"key.niftycarts.action",
+		actionKeyMapping = KeyMappingHelper.registerKeyMapping(new KeyMapping(
+				"key.usefulcarts.action",
 				InputConstants.Type.KEYSYM,
 				GLFW.GLFW_KEY_R,
                 keyCategory
 		));
 
-		toggleSlowMapping = KeyBindingHelper.registerKeyBinding(new KeyMapping(
-				"key.niftycarts.slow",
+		toggleSlowMapping = KeyMappingHelper.registerKeyMapping(new KeyMapping(
+				"key.usefulcarts.slow",
 				InputConstants.Type.KEYSYM,
 				GLFW.GLFW_KEY_Z,
                 keyCategory
@@ -113,9 +113,9 @@ public class NiftyCartsClient implements ClientModInitializer {
                 while (toggleSlowMapping.consumeClick()) {
                     if (player.getControlledVehicle() != null && ToggleSlowPayload.isSlowable(player.getControlledVehicle())) {
                         if (!ToggleSlowPayload.isSlow(player.getControlledVehicle())) {
-                            player.displayClientMessage(Component.translatable("message.niftycarts.slow_toggled_on", toggleSlowMapping.getTranslatedKeyMessage()), true);
+                            player.sendOverlayMessage(Component.translatable("message.usefulcarts.slow_toggled_on", toggleSlowMapping.getTranslatedKeyMessage()));
                         } else {
-                            player.displayClientMessage(Component.translatable("message.niftycarts.slow_toggled_off", toggleSlowMapping.getTranslatedKeyMessage()), true);
+                            player.sendOverlayMessage(Component.translatable("message.usefulcarts.slow_toggled_off", toggleSlowMapping.getTranslatedKeyMessage()));
                         }
                     }
                     ClientPlayNetworking.send(new ToggleSlowPayload());

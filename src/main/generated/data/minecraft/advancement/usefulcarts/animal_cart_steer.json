@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:usefulcarts/root",
+  "criteria": {
+    "animal_cart_steer": {
+      "conditions": {
+        "type": "usefulcarts:animal_cart",
+        "distance": 1.0
+      },
+      "trigger": "usefulcarts:steer_cart"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.usefulcarts.animal_cart_steer.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "usefulcarts:oak_animal_cart"
+    },
+    "title": {
+      "translate": "advancements.usefulcarts.animal_cart_steer.title"
+    }
+  },
+  "requirements": [
+    [
+      "animal_cart_steer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

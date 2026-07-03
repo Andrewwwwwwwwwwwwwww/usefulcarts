@@ -1,10 +1,11 @@
 //file:noinspection GroovyAssignabilityCheck
 plugins {
-	id 'fabric-loom' version '1.14-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
-version = project.mod_version
+// Jar/file name includes the Minecraft version, e.g. usefulcarts-26.2.0+mc26.2.jar
+version = "${project.mod_version}+mc${project.minecraft_version}"
 group = project.maven_group
 
 base {
@@ -56,36 +57,39 @@ loom {
     splitEnvironmentSourceSets()
 
 	mods {
-		"niftycarts" {
+		"usefulcarts" {
 			sourceSet sourceSets.main
 			sourceSet sourceSets.client
 		}
 	}
 
-	accessWidenerPath = file("src/main/resources/niftycarts.accesswidener")
+	accessWidenerPath = file("src/main/resources/usefulcarts.accesswidener")
 }
 
-fabricApi {
-	configureDataGeneration() {
-		client = true
+// Fabric API removed the datagen provider API in 26.2, so the mod's datagen sources were dropped.
+// The assets they previously produced are committed under src/main/generated and are still bundled
+// here as resources, so the shipped mod is functionally unchanged.
+sourceSets {
+	main {
+		resources {
+			srcDir 'src/main/generated'
+		}
 	}
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.layered() {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${project.parchment_version}@zip")
-    }
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	// MC 26.2 ships non-obfuscated, so no mappings layer is declared (loom uses official names
+	// directly) and loom drops the remapping `mod*` configs -> use plain implementation/api.
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	//modImplementation "curse.maven:mythic-mounts-517650:4758535"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	//implementation "curse.maven:mythic-mounts-517650:4758535"
 
-	modApi "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${project.forgeconfigapiport_version}"   // `modVersion` e.g. 7.0.0 for Minecraft 1.20
-	modImplementation "maven.modrinth:sodium:${project.sodium_version}"
+	implementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${project.forgeconfigapiport_version}"   // `modVersion` e.g. 7.0.0 for Minecraft 1.20
+	implementation "maven.modrinth:sodium:${project.sodium_version}"
 }
 
 processResources {
@@ -97,7 +101,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
@@ -106,8 +110,8 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {

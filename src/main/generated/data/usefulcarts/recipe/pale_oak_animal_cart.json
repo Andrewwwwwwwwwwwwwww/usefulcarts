@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": "minecraft:pale_oak_planks",
+    "w": "usefulcarts:wheel"
+  },
+  "pattern": [
+    "ppp",
+    "ppp",
+    "wpw"
+  ],
+  "result": {
+    "count": 1,
+    "id": "usefulcarts:pale_oak_animal_cart"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "p": "minecraft:acacia_planks",
+    "w": "usefulcarts:wheel"
+  },
+  "pattern": [
+    "ppp",
+    "ppp",
+    "wpw"
+  ],
+  "result": {
+    "count": 1,
+    "id": "usefulcarts:acacia_animal_cart"
+  }
+}
