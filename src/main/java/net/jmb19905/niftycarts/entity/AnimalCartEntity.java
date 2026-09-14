@@ -31,7 +31,10 @@ public final class AnimalCartEntity extends AbstractDrawnEntity {
         super.tick();
         final Entity coachman = this.getControllingPassenger();
         final Entity pulling = this.getPulling();
-        if (pulling != null && coachman != null && pulling.getControllingPassenger() == null) {
+        // Only spawn the driving Postilion onto a real mount (horse/donkey/mule/camel). If the cart
+        // is being pulled by a player on foot, `pulling` is that player, and making a Postilion ride
+        // the player produced a bad passenger state that crashed the game.
+        if (pulling instanceof net.minecraft.world.entity.Mob && coachman != null && pulling.getControllingPassenger() == null) {
             final PostilionEntity postilion = NiftyCarts.POSTILION_ENTITY.create(this.level(), EntitySpawnReason.SPAWN_ITEM_USE);
             if (postilion != null) {
                 postilion.snapTo(pulling.getX(), pulling.getY(), pulling.getZ(), coachman.getYRot(), coachman.getXRot());

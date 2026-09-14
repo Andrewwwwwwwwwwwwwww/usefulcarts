@@ -62,7 +62,9 @@ public class ReaperCartEntity extends AbstractDrawnEntity {
             playSound(SoundEvents.WOODEN_TRAPDOOR_CLOSE);
         }
         this.entityData.set(FOLDED, folded);
-        if (pulling != null && coachman != null && pulling.getControllingPassenger() == null) {
+        // Only spawn the driving Postilion onto a real mount (horse/donkey/mule/camel), never onto a
+        // player pulling the cart on foot — that produced a bad passenger state that crashed the game.
+        if (pulling instanceof net.minecraft.world.entity.Mob && coachman != null && pulling.getControllingPassenger() == null) {
             final PostilionEntity postilion = NiftyCarts.POSTILION_ENTITY.create(this.level(), EntitySpawnReason.SPAWN_ITEM_USE);
             if (postilion != null) {
                 postilion.snapTo(pulling.getX(), pulling.getY(), pulling.getZ(), coachman.getYRot(), coachman.getXRot());

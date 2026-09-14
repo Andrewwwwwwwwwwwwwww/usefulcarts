@@ -436,7 +436,6 @@ public abstract class AbstractDrawnEntity extends Entity {
         if (entityIn == null) {
             return true;
         }
-        System.out.println(this.pulling);
         return (this.pulling == null || !this.pulling.isAlive()) && !this.hasPassenger(entityIn) && this.canPull(entityIn);
     }
 
@@ -547,10 +546,13 @@ public abstract class AbstractDrawnEntity extends Entity {
             return null;
         }
         final Entity first = passengers.getFirst();
-        if (first instanceof Animal || !(first instanceof LivingEntity)) {
+        // Only a player may steer a cart. Returning any other living entity (villager, monster,
+        // iron golem, ...) as the controlling passenger makes vanilla try to drive the vehicle
+        // through that mob, which crashes the game when the cart is pulled/ticked.
+        if (!(first instanceof Player player)) {
             return null;
         }
-        return (LivingEntity) first;
+        return player;
     }
 
     @Override
