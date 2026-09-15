@@ -14,6 +14,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
@@ -103,13 +104,15 @@ public final class PlowEntity extends AbstractDrawnInventoryEntity {
     private void tryBreakBlock(ItemStack stack, BlockPos pos, Level level, Player player) {
         BlockState state = level.getBlockState(pos);
         TagKey<@NotNull Block> tag;
-        switch (stack.getItem()) {
-            case HoeItem ignored -> tag = NiftyCarts.PLOW_BREAKABLE_HOE;
-            case ShovelItem ignored -> tag = NiftyCarts.PLOW_BREAKABLE_SHOVEL;
-            case AxeItem ignored -> tag = NiftyCarts.PLOW_BREAKABLE_AXE;
-            default -> {
-                return;
-            }
+        // Tool item classes no longer exist; the vanilla tool tags identify the tool kind
+        if (stack.is(ItemTags.HOES)) {
+            tag = NiftyCarts.PLOW_BREAKABLE_HOE;
+        } else if (stack.is(ItemTags.SHOVELS)) {
+            tag = NiftyCarts.PLOW_BREAKABLE_SHOVEL;
+        } else if (stack.is(ItemTags.AXES)) {
+            tag = NiftyCarts.PLOW_BREAKABLE_AXE;
+        } else {
+            return;
         }
         if (state.isAir()) return;
         if (state.is(tag)) {

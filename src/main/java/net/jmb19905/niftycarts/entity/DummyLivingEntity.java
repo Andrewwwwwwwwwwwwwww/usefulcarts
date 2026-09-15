@@ -18,7 +18,7 @@ public class DummyLivingEntity extends LivingEntity {
         super(type, world);
         this.setSilent(true);
         this.setNoGravity(true);
-        this.setInvulnerable(true);
+        this.setPermanentlyInvulnerable(true);
         this.setInvisible(true);
     }
 
@@ -48,7 +48,7 @@ public class DummyLivingEntity extends LivingEntity {
 
     @Override
     public @NotNull PushReaction getPistonPushReaction() {
-        return PushReaction.IGNORE;
+        return PushReaction.IGNORE_ENTITY;
     }
 
     /*@Override

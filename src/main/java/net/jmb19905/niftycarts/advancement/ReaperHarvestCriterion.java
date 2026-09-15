@@ -6,7 +6,9 @@ import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.predicates.*;
 import net.minecraft.advancements.predicates.entity.*;
 import net.minecraft.advancements.triggers.*;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,11 +25,11 @@ public class ReaperHarvestCriterion extends SimpleCriterionTrigger<ReaperHarvest
         return TriggerInstance.CODEC;
     }
 
-    public record TriggerInstance(Optional<ContextAwarePredicate> player, Optional<SimpleBlockPredicate> block) implements SimpleInstance {
+    public record TriggerInstance(Optional<Holder<LootItemCondition>> player, Optional<SimpleBlockPredicate> block) implements SimpleInstance {
 
         private static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                        EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
+                        LootItemCondition.CODEC.optionalFieldOf("player").forGetter(TriggerInstance::player),
                         SimpleBlockPredicate.CODEC.optionalFieldOf("block").forGetter(TriggerInstance::block)
                 ).apply(instance, TriggerInstance::new));
 

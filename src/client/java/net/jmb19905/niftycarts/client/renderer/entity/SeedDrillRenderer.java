@@ -76,9 +76,9 @@ public class SeedDrillRenderer extends DrawnRenderer<SeedDrillEntity, SeedDrillR
                 this.attach(this.model.getBody(), this.model.getBody(), s -> {
                     float f = (float) finalI - 4.5f;
                     s.translate(f / 6.5 + 1f / 16,-2f/16 - (float) finalJ / 32 + (finalI % 4) * 0.001, random.nextFloat(3f / 8) - 3f / 16);
-                    s.mulPose(Axis.XP.rotationDegrees(-90.0F));
+                    s.rotateDegrees(Axis.XP, -90.0F);
                     s.scale(0.6f, 0.6f, 0.6f);
-                    s.mulPose(Axis.ZP.rotation(random.nextFloat(2 * Mth.PI)));
+                    s.rotate(Axis.ZP, random.nextFloat(2 * Mth.PI));
 
                     state.itemStates.get(finalI).submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
                 }, stack);

@@ -66,12 +66,12 @@ public final class PlowRenderer extends DrawnRenderer<PlowEntity, PlowRenderStat
             }
             int finalI = i;
             this.attach(this.model.getBody(), this.model.getShaft(i), s -> {
-                s.mulPose(Axis.XP.rotationDegrees(-90.0F));
-                s.mulPose(Axis.YP.rotationDegrees(90.0F));
+                s.rotateDegrees(Axis.XP, -90.0F);
+                s.rotateDegrees(Axis.YP, 90.0F);
                 s.translate(-4.0D / 16.0D, 1.0D / 16.0D, 0.0D);
                 if (itemStack.getItem() instanceof BlockItem) {
                     s.translate(0.0D, -0.1D, 0.0D);
-                    s.mulPose(Axis.ZP.rotationDegrees(180.0F));
+                    s.rotateDegrees(Axis.ZP, 180.0F);
                 }
                 state.itemStates.get(finalI).submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
             }, stack);

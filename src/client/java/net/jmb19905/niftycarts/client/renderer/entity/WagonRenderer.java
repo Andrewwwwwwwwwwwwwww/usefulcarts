@@ -42,8 +42,8 @@ public class WagonRenderer extends DrawnRenderer<WagonEntity, WagonRenderState, 
     protected void submitContents(WagonRenderState state, PoseStack stack, SubmitNodeCollector collector) {
         stack.pushPose();
         this.model.getBody().translateAndRotate(stack);
-        collector.submitModel(this.model.getChestModel(), state, stack, this.model.renderType(NiftyCarts.resLoc("textures/entity/wagon_chest.png")), state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
-        collector.submitModel(this.model.getRoofModel(), state, stack, this.model.renderType(state.roofTexture), state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor, null);
+        collector.submitModel(this.model.getChestModel(), state, stack, this.model.renderType(NiftyCarts.resLoc("textures/entity/wagon_chest.png")), state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+        collector.submitModel(this.model.getRoofModel(), state, stack, this.model.renderType(state.roofTexture), state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
         if (state.bannerColor != null) {
             stack.pushPose();
             stack.translate(0.0D, -0.58D, 2.62D);

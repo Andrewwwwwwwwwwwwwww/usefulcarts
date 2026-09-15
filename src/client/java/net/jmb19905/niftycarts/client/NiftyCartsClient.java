@@ -31,7 +31,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.fml.config.ModConfig;
 import org.jetbrains.annotations.NotNull;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.Objects;
 
@@ -80,15 +79,13 @@ public class NiftyCartsClient implements ClientModInitializer {
 
 		actionKeyMapping = KeyMappingHelper.registerKeyMapping(new KeyMapping(
 				"key.usefulcarts.action",
-				InputConstants.Type.KEYSYM,
-				GLFW.GLFW_KEY_R,
+				InputConstants.KEY_R,
                 keyCategory
 		));
 
 		toggleSlowMapping = KeyMappingHelper.registerKeyMapping(new KeyMapping(
 				"key.usefulcarts.slow",
-				InputConstants.Type.KEYSYM,
-				GLFW.GLFW_KEY_Z,
+				InputConstants.KEY_Z,
                 keyCategory
 		));
 

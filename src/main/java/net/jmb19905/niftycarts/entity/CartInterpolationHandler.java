@@ -1,16 +1,17 @@
 package net.jmb19905.niftycarts.entity;
 
+import net.minecraft.core.PositionAndRotation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InterpolationHandler;
+import net.minecraft.world.entity.LinearInterpolationHandler;
+import net.minecraft.world.entity.PositionPath;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.function.Consumer;
-
-public class CartInterpolationHandler extends InterpolationHandler {
+public class CartInterpolationHandler implements InterpolationHandler {
 
     private final Entity entity;
     private int interpolationSteps;
@@ -21,26 +22,14 @@ public class CartInterpolationHandler extends InterpolationHandler {
     private Vec2 previousTickRot;
     @Nullable
     private Vec3 previousTickVelocity;
-    @Nullable
-    private final Consumer<InterpolationHandler> onInterpolationStart;
 
     public CartInterpolationHandler(Entity entity) {
-        this(entity, DEFAULT_INTERPOLATION_STEPS);
+        this(entity, LinearInterpolationHandler.DEFAULT_INTERPOLATION_STEPS);
     }
 
     public CartInterpolationHandler(Entity entity, int interpolationSteps) {
-        this(entity, interpolationSteps, null);
-    }
-
-    public CartInterpolationHandler(Entity entity, @Nullable Consumer<InterpolationHandler> onInterpolationStart) {
-        this(entity, DEFAULT_INTERPOLATION_STEPS, onInterpolationStart);
-    }
-
-    public CartInterpolationHandler(Entity entity, int interpolationSteps, @Nullable Consumer<InterpolationHandler> onInterpolationStart) {
-        super(entity, interpolationSteps, onInterpolationStart);
         this.interpolationSteps = interpolationSteps;
         this.entity = entity;
-        this.onInterpolationStart = onInterpolationStart;
     }
 
     public @NotNull Vec3 position() {
@@ -59,6 +48,19 @@ public class CartInterpolationHandler extends InterpolationHandler {
         return this.interpolationData.steps > 0 ? this.interpolationData.deltaMovement : this.entity.getDeltaMovement();
     }
 
+    @Override
+    public @NotNull PositionAndRotation target() {
+        return PositionAndRotation.of(this.position(), this.yRot(), this.xRot());
+    }
+
+    @Override
+    public boolean interpolateTo(@Nullable PositionPath path, float yRot, float xRot, boolean useRotation) {
+        // Like vanilla: a null path keeps the current target position, useRotation=false keeps the current target rotation
+        Vec3 pos = path != null ? path.endPosition() : this.position();
+        this.interpolateTo(pos, useRotation ? yRot : this.yRot(), useRotation ? xRot : this.xRot(), Vec3.ZERO);
+        return true;
+    }
+
     public void interpolateTo(Vec3 pos, float yRot, float xRot, Vec3 velocity) {
         if (this.interpolationSteps == 0) {
             this.entity.snapTo(pos, yRot, xRot);
@@ -73,9 +75,7 @@ public class CartInterpolationHandler extends InterpolationHandler {
             this.previousTickPosition = this.entity.position();
             this.previousTickRot = new Vec2(this.entity.getXRot(), this.entity.getYRot());
             this.previousTickVelocity = this.entity.getDeltaMovement();
-            if (this.onInterpolationStart != null) {
-                this.onInterpolationStart.accept(this);
-            }
+            this.entity.onInterpolationStart(this);
         }
     }
 
@@ -83,6 +83,18 @@ public class CartInterpolationHandler extends InterpolationHandler {
         this.interpolateTo(pos, yRot, xRot, Vec3.ZERO);
     }
 
+    @Override
+    public void applyPredictedMovement(@NotNull Vec3 delta) {
+        if (!this.hasActiveInterpolation()) return;
+        if (this.entity.level().noCollision(this.entity, this.entity.makeBoundingBox().move(this.interpolationData.position.add(delta)))) {
+            this.interpolationData.addPositionDelta(delta);
+        }
+        if (this.previousTickPosition != null) {
+            this.previousTickPosition = this.previousTickPosition.add(delta);
+        }
+    }
+
+    @Override
     public boolean hasActiveInterpolation() {
         return this.interpolationData.steps > 0;
     }
@@ -91,6 +103,7 @@ public class CartInterpolationHandler extends InterpolationHandler {
         this.interpolationSteps = interpolationLength;
     }
 
+    @Override
     public void interpolate() {
         if (!this.hasActiveInterpolation()) {
             this.cancel();
@@ -134,6 +147,7 @@ public class CartInterpolationHandler extends InterpolationHandler {
         }
     }
 
+    @Override
     public void cancel() {
         this.interpolationData.steps = 0;
         this.previousTickPosition = null;
@@ -155,7 +169,7 @@ public class CartInterpolationHandler extends InterpolationHandler {
             this.xRot = xRot;
             this.deltaMovement = deltaMovement;
         }
-        
+
         public void decrease() {
             this.steps--;
         }

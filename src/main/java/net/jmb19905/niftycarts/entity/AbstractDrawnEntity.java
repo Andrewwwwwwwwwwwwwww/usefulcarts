@@ -23,6 +23,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -62,7 +63,6 @@ public abstract class AbstractDrawnEntity extends Entity {
     private static final EntityDataAccessor<@NotNull String> WOOD_TYPE = SynchedEntityData.defineId(AbstractDrawnEntity.class, EntityDataSerializers.STRING);
     private static final EntityDataAccessor<@NotNull Boolean> LOCKED = SynchedEntityData.defineId(AbstractDrawnEntity.class, EntityDataSerializers.BOOLEAN);
     private static final Identifier PULL_MODIFIER_ID = NiftyCarts.resLoc("pull");
-    private final CartInterpolationHandler interpolation = new CartInterpolationHandler(this);
     protected List<CartWheel> wheels;
     private int pullingId = -1;
     private UUID pullingUUID = null;
@@ -114,7 +114,6 @@ public abstract class AbstractDrawnEntity extends Entity {
             this.setDamageTaken(this.getDamageTaken() - 1.0F);
         }
         super.tick();
-        this.interpolation.interpolate();
         if (this.pulling == null) {
             if (shouldPitch()) this.setXRot(getDisconnectedAngle());
             this.move(MoverType.SELF, this.getDeltaMovement());
@@ -488,7 +487,7 @@ public abstract class AbstractDrawnEntity extends Entity {
                     if (stack.isEmpty()) {
                         player.setItemInHand(hand, oldBanner);
                     } else if (!player.getInventory().add(oldBanner)) {
-                        player.drop(oldBanner, false);
+                        player.drop(oldBanner, false, Prediction.SERVER_ONLY);
                     }
                 }
                 this.playSound(SoundEvents.WOOD_PLACE, 1.0F, 0.8F);
@@ -534,8 +533,8 @@ public abstract class AbstractDrawnEntity extends Entity {
     }
 
     @Override
-    public @Nullable InterpolationHandler getInterpolation() {
-        return interpolation;
+    protected @NotNull InterpolationHandler createInterpolationHandler() {
+        return new CartInterpolationHandler(this);
     }
 
     @Override

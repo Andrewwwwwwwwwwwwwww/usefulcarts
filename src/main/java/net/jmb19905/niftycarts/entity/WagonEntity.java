@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -147,7 +148,7 @@ public class WagonEntity extends AbstractDrawnInventoryEntity {
                 if (!player.hasInfiniteMaterials()) {
                     itemStack.shrink(5);
                     if (!player.getInventory().add(this.entityData.get(EQUIPPED_CARPET))) {
-                        player.drop(this.entityData.get(EQUIPPED_CARPET), false);
+                        player.drop(this.entityData.get(EQUIPPED_CARPET), false, Prediction.SERVER_ONLY);
                     }
                 }
                 this.entityData.set(EQUIPPED_CARPET, new ItemStack(item, 5));

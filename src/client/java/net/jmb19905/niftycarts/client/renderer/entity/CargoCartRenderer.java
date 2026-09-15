@@ -165,7 +165,7 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
             stack.translate(0.0D, -0.7D, getFlowerOffsetZ());
             stack.scale(0.65F, 0.65F, 0.65F);
             stack.translate(ix, 0.5D, iz - 1.0D);
-            stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+            stack.rotateDegrees(Axis.ZP, 180.0F);
             blockRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, -1);
             stack.popPose();
         }
@@ -184,7 +184,7 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
         }
         stack.pushPose();
         stack.translate(0.0D, -2.5D / 16.0D, 0.0D);
-        stack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+        stack.rotateDegrees(Axis.XP, -90.0F);
         var registryAccess = state.level.registryAccess();
         ObjectList<PaintingVariant> variants = new ObjectArrayList<>();
         registryAccess.lookupOrThrow(Registries.PAINTING_VARIANT).getTagOrEmpty(PaintingVariantTags.PLACEABLE).forEach(variantHolder -> {
@@ -205,7 +205,7 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
             stack.pushPose();
             stack.translate(getPaintingOffset(i, n, count));
             n++;
-            stack.mulPose(Axis.ZP.rotation(rng.nextFloat() * (float) Math.PI * getPaintingAngleFactor()));
+            stack.rotate(Axis.ZP, rng.nextFloat() * (float) Math.PI * getPaintingAngleFactor());
             var atlas = ctx.getAtlas(AtlasIds.PAINTINGS);
             final TextureAtlasSprite back = atlas.getSprite(BACK_SPRITE_LOCATION);
             CargoRenderUtil.renderPainting(ctx, paintingVariant, stack, RenderTypes.entitySolidZOffsetForward(back.atlasLocation()), collector, state.lightCoords);
@@ -245,7 +245,7 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
                 if (cargoState.usesBlockLight() && itemStack.getItem() != Items.TRIDENT && NiftyCartsConfig.getClient().renderSupplyGear.get()) {
                     stack.translate(x, -0.46D, z);
                     stack.scale(getBlockSize(), getBlockSize(), getBlockSize());
-                    stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+                    stack.rotateDegrees(Axis.ZP, 180.0F);
                     if (iz < 1 && itemStack.is(ItemTags.BEDS)) {
                         stack.translate(0.0D, 0.0D, 1.0D);
                     }
@@ -260,21 +260,21 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
                         if (itemStack.getItem() == Items.SHIELD) {
                             //stack.translate(x, -0.46D, z);
                             stack.scale(getBlockSize(), getBlockSize(), getBlockSize());
-                            stack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+                            stack.rotateDegrees(Axis.ZP, 180.0F);
                             stack.scale(1.2F, 1.2F, 1.2F);
-                            stack.mulPose(Axis.YP.rotationDegrees(ix == 0 ? -90.0F : 90.0F));
+                            stack.rotateDegrees(Axis.YP, ix == 0 ? -90.0F : 90.0F);
                             stack.translate(0.5D, getShieldOffsetY(), -0.05D);
-                            stack.mulPose(Axis.XP.rotationDegrees(-22.5F));
+                            stack.rotateDegrees(Axis.XP, -22.5F);
                         } else {
                             stack.scale(getItemSize(), getItemSize(), getItemSize());
-                            stack.mulPose(Axis.YP.rotation(rng.nextFloat() * (float) Math.PI));
-                            stack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+                            stack.rotate(Axis.YP, rng.nextFloat() * (float) Math.PI);
+                            stack.rotateDegrees(Axis.XP, -90.0F);
                         }
                         final int copies = Math.min(itemStack.getCount(), (itemStack.getCount() - 1) / 16 + 2);
                         cargoState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
                         for (int n = 1; n < copies; n++) {
                             stack.pushPose();
-                            stack.mulPose(Axis.ZP.rotation(rng.nextFloat() * (float) Math.PI));
+                            stack.rotate(Axis.ZP, rng.nextFloat() * (float) Math.PI);
                             stack.translate((rng.nextFloat() * 2.0F - 1.0F) * 0.05F, (rng.nextFloat() * 2.0F - 1.0F) * 0.05F, -0.1D * n);
                             cargoState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
                             stack.popPose();
@@ -291,7 +291,7 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
         if (equippable == null) return;
         EquipmentSlot slot = equippable.slot();
         final ArmorStandArmorModel model = this.armorSet.get(slot);
-        stack.mulPose(Axis.YP.rotation(ix == 0 ? (float) Math.PI * 0.5F : (float) -Math.PI * 0.5F));
+        stack.rotate(Axis.YP, ix == 0 ? (float) Math.PI * 0.5F : (float) -Math.PI * 0.5F);
         ArmorStandRenderState armorRenderState = null;
         switch (slot) {
             case HEAD -> {
@@ -301,7 +301,7 @@ public abstract class CargoCartRenderer<T extends AbstractCargoCart, M extends C
             }
             case CHEST -> {
                 stack.translate(0.0D, -0.3D, -0.27D);
-                stack.mulPose(Axis.XP.rotation(0.9f));
+                stack.rotate(Axis.XP, 0.9f);
                 state.armorRenderState.leftArmPose = new Rotations(-0.75f * 180f / Mth.PI, 0, 0);
                 state.armorRenderState.rightArmPose = new Rotations(-0.75f * 180f / Mth.PI, 0, 0);
                 armorRenderState = state.armorRenderState;

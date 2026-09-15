@@ -47,8 +47,8 @@ public abstract class DrawnRenderer<T extends AbstractDrawnEntity, S extends Car
     }
 
     @Override
-    protected @NotNull AABB getBoundingBoxForCulling(@NotNull T minecraft) {
-        return super.getBoundingBoxForCulling(minecraft).inflate(0.5);
+    protected @NotNull AABB getBoundingBoxForCulling(@NotNull T minecraft, float partialTick) {
+        return super.getBoundingBoxForCulling(minecraft, partialTick).inflate(0.5);
     }
 
     @Override
@@ -80,7 +80,7 @@ public abstract class DrawnRenderer<T extends AbstractDrawnEntity, S extends Car
         this.setupRotation(state, stack);
 
         this.model.setupAnim(state);
-        collector.submitModel(this.model, state, stack, this.model.renderType(this.getTextureLocation(state)), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, null, 0, null);
+        collector.submitModel(this.model, state, stack, this.model.renderType(this.getTextureLocation(state)), state.lightCoords, OverlayTexture.NO_OVERLAY, -1, null, 0);
         this.submitContents(state, stack, collector);
 
         stack.popPose();
@@ -89,14 +89,14 @@ public abstract class DrawnRenderer<T extends AbstractDrawnEntity, S extends Car
     protected abstract void submitContents(S state, final PoseStack stack, final SubmitNodeCollector submitNodeCollector);
 
     public void setupRotation(S state, final PoseStack stack) {
-        stack.mulPose(Axis.YP.rotationDegrees(180.0F - state.yaw));
+        stack.rotateDegrees(Axis.YP, 180.0F - state.yaw);
         final float time = state.timeSinceHit - state.delta;
         if (time > 0.0F) {
             final double center = 1.2D;
             stack.translate(0.0D, center, 0.0D);
             final float damage = Math.max(state.damage - state.delta, 0.0F);
             final float angle = Mth.sin(time) * time * damage / 60.0F;
-            stack.mulPose(Axis.ZP.rotationDegrees(angle * state.forward));
+            stack.rotateDegrees(Axis.ZP, angle * state.forward);
             stack.translate(0.0D, -center, 0.0D);
             stack.translate(0.0D, angle / 32.0F, 0.0D);
         }
@@ -105,7 +105,7 @@ public abstract class DrawnRenderer<T extends AbstractDrawnEntity, S extends Car
 
     protected void submitBanner(S state, final PoseStack stack, final SubmitNodeCollector submitNodeCollector) {
         stack.pushPose();
-        stack.mulPose(Axis.YP.rotationDegrees(90.0F));
+        stack.rotateDegrees(Axis.YP, 90.0F);
         final float scale = 2.0F / 3.0F;
         stack.scale(scale, scale, scale);
         var material = Sheets.BANNER_BASE;
@@ -113,7 +113,7 @@ public abstract class DrawnRenderer<T extends AbstractDrawnEntity, S extends Car
         submitNodeCollector.submitModelPart(bar, stack, material.renderType(RenderTypes::entitySolid), state.lightCoords, OverlayTexture.NO_OVERLAY, materials.get(material));
         float k = ((float)Math.floorMod((int) ((state.x * 7 + state.y * 9 + state.z * 13) + state.ageInTicks), 100) + state.delta) / 100.0F;
         stack.translate(-4 / 16f, 18 / 16f, 1.5f / 16f);
-        BannerRenderer.submitPatterns(materials, stack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, this.flagModel, k, true, state.bannerColor, state.bannerPattern, null);
+        BannerRenderer.submitPatterns(materials, stack, submitNodeCollector, state.lightCoords, OverlayTexture.NO_OVERLAY, this.flagModel, k, true, state.bannerColor, state.bannerPattern);
         stack.popPose();
     }
 
