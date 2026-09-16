@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:jungle_wagon"
+        "recipes": "usefulcarts:jungle_wagon"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:mangrove_plow"
+        "recipes": "usefulcarts:mangrove_plow"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

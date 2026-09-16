@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:mangrove_reaper"
+        "recipes": "usefulcarts:mangrove_reaper"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:cherry_reaper"
+        "recipes": "usefulcarts:cherry_reaper"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

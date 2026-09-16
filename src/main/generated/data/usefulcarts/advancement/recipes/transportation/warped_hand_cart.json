@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:warped_hand_cart"
+        "recipes": "usefulcarts:warped_hand_cart"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

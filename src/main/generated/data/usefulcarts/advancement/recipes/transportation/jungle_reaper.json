@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:jungle_reaper"
+        "recipes": "usefulcarts:jungle_reaper"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

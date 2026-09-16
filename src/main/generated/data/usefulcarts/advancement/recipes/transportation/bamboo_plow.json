@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:bamboo_plow"
+        "recipes": "usefulcarts:bamboo_plow"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

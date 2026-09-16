@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:birch_wagon"
+        "recipes": "usefulcarts:birch_wagon"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:dark_oak_reaper"
+        "recipes": "usefulcarts:dark_oak_reaper"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

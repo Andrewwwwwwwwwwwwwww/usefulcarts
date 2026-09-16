@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:crimson_reaper"
+        "recipes": "usefulcarts:crimson_reaper"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:bamboo_reaper"
+        "recipes": "usefulcarts:bamboo_reaper"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

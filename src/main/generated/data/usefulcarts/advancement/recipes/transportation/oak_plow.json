@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:oak_plow"
+        "recipes": "usefulcarts:oak_plow"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

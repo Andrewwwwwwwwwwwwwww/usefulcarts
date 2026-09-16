@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:acacia_wagon"
+        "recipes": "usefulcarts:acacia_wagon"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

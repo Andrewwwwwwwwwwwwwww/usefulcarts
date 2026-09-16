@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:spruce_plow"
+        "recipes": "usefulcarts:spruce_plow"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

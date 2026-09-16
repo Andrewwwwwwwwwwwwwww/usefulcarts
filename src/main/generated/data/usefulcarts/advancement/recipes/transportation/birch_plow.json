@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:birch_plow"
+        "recipes": "usefulcarts:birch_plow"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

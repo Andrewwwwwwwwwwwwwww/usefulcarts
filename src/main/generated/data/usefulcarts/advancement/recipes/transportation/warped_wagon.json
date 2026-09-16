@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:warped_wagon"
+        "recipes": "usefulcarts:warped_wagon"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

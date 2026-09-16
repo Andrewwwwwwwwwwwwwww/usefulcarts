@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:mangrove_seed_drill"
+        "recipes": "usefulcarts:mangrove_seed_drill"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

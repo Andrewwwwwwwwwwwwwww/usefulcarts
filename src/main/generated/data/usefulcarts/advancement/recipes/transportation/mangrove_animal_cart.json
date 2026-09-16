@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "usefulcarts:mangrove_animal_cart"
+        "recipes": "usefulcarts:mangrove_animal_cart"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
