@@ -35,7 +35,7 @@
 		"minecraft": "~26.3",
 		"java": ">=25",
 		"fabric-api": "*",
-		"forgeconfigapiport": ">=26.2.1"
+		"forgeconfigapiport": ">=26.3.0"
 	},
 	"suggests": {
 		"forgeconfigscreens": "*"
