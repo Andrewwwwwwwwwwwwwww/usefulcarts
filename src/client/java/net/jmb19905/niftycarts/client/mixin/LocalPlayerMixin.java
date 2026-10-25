@@ -21,7 +21,8 @@ public abstract class LocalPlayerMixin extends Player {
         super(level, gameProfile);
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getRootVehicle()Lnet/minecraft/world/entity/Entity;"))
+    // 26.3 moved the vehicle sync out of tick() into sendChanges(), which Minecraft calls every tick.
+    @Inject(method = "sendChanges", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/player/LocalPlayer;getRootVehicle()Lnet/minecraft/world/entity/Entity;"))
     public void tick(CallbackInfo ci) {
         Entity entity = this.getRootVehicle();
         if (entity != this && entity.getControllingPassenger() == this && entity instanceof AbstractDrawnEntity drawnEntity) {
