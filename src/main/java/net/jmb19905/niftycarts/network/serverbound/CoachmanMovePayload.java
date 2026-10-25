@@ -9,6 +9,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
@@ -44,7 +45,8 @@ public record CoachmanMovePayload(float zza) implements CustomPacketPayload {
                     postilion.setYRot(player.getYRot());
                     postilion.yRotO = postilion.getYRot();
                     postilion.setXRot(player.getXRot() * 0.5F);
-                    postilion.zza = msg.zza();
+                    // Clamp: the client sends this, and a hacked one could otherwise speed the cart up.
+                    postilion.zza = Mth.clamp(msg.zza(), -1.0F, 1.0F);
                     postilion.xxa = 0.0F;
                 }
             }
